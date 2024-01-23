@@ -81,7 +81,8 @@ contract StakingContract{
         uint256 rewardS = _user.reward + calculateReward();
         require(rewardS > 0, "No reward to claim");
         _user.lastTimeStaked = block.timestamp;
-        rewardToken.transfer(msg.sender, rewardS);
+        bool sent = rewardToken.transfer(msg.sender, rewardS);
+        require(sent, "Transfer failed");
         rewardS -= _user.reward;
     }
 
